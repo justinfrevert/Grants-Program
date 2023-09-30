@@ -1,4 +1,4 @@
-# Rate-Limiting Nullifier Grant proposal 
+# Semaphore/RLN + Application Grant proposal draft
 
 > This document will be part of the terms and conditions of your agreement and therefore needs to contain all the required information about the project. Don't remove any of the mandatory parts presented in bold letters or as headlines (except for the title)! Lines starting with a `>` (such as this one) should be removed. Please use markdown instead of HTML (e.g. `![](image.png)` instead of `<img>`). 
 >
@@ -62,12 +62,41 @@ Semaphore components for Substrate
 
 
 RLN onchain components
-![](https://hackmd.io/_uploads/BJpWXrkxp.png)
+![](https://hackmd.io/_uploads/HyydBXrx6.png)
 ![](https://hackmd.io/_uploads/rkHImBJga.png)
 
 
 Event writer pallet
 ![](https://hackmd.io/_uploads/SkAMO_UkT.png)
+
+#### Pallet Design
+
+Semaphore:
+```rust
+// Extrinsics
+pub fn verify(origin: OriginFor<T>, proof: BoundedVec<u8, T::ProofMaxLen>) -> DispatchResult;
+
+// Storage
+pub type ExternalNullifier<T> = StorageValue<_, u32>;
+```
+
+Rate-Limiting Nullifier:
+```rust
+// Extrinsics
+pub fn verify(origin: OriginFor<T>, proof: BoundedVec<u8, T::ProofMaxLen>) -> DispatchResult;
+
+// Storage
+pub type ExternalNullifier<T> = StorageValue<_, u32>;
+```
+
+Multiwriter Event Feed:
+```rust
+// Extrinsics
+pub fn emit(origin: OriginFor<T>, message: BoundedVec<T::MessageMaxLength>, proof: BoundedVec<u8, T::ProofMaxLen>, relates_to: Option<T::EventId>) -> DispatchResult;
+
+// Storage
+pub type Events<T> = StorageValue<_, BoundedVec<Event, T::MaxEvents>>;
+```
 
 ### Ecosystem Fit
 
@@ -159,7 +188,7 @@ Only investigation into available proof systems, example circuits, and on-chain 
 
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
-| **0a.** | MIT |
+| **0a.** | License | Apache 2.0 / GPLv3 / MIT / Unlicense |
 | **0b.** | Documentation | We will provide both **inline documentation** of the code and a basic **tutorial** that explains how a user can (for example) spin up one of our Substrate nodes and send test transactions, which will show how the new functionality works. |
 | **0c.** | Testing and Testing Guide | Core functions will be fully covered by comprehensive unit tests to ensure functionality and robustness. In the guide, we will describe how to run these tests. |
 | **0d.** | Docker | We will provide a Dockerfile(s) that can be used to test all the functionality delivered with this milestone. |
@@ -177,7 +206,7 @@ Only investigation into available proof systems, example circuits, and on-chain 
 
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
-| **0a.** | MIT |
+| **0a.** | License | Apache 2.0 / GPLv3 / MIT / Unlicense |
 | **0b.** | Documentation | We will provide both **inline documentation** of the code and a basic **tutorial** that explains how a user can (for example) spin up one of our Substrate nodes and send test transactions, which will show how the new functionality works. |
 | **0c.** | Testing and Testing Guide | Core functions will be fully covered by comprehensive unit tests to ensure functionality and robustness. In the guide, we will describe how to run these tests. |
 | **0d.** | Docker | We will provide a Dockerfile(s) that can be used to test all the functionality delivered with this milestone. |
@@ -194,7 +223,7 @@ Only investigation into available proof systems, example circuits, and on-chain 
 
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
-| **0a.** | MIT |
+| **0a.** | License | Apache 2.0 / GPLv3 / MIT / Unlicense |
 | **0b.** | Documentation | We will provide both **inline documentation** of the code and a basic **tutorial** that explains how a user can (for example) spin up one of our Substrate nodes and send test transactions, which will show how the new functionality works. |
 | **0c.** | Testing and Testing Guide | Core functions will be fully covered by comprehensive unit tests to ensure functionality and robustness. In the guide, we will describe how to run these tests. |
 | **0d.** | Docker | We will provide a Dockerfile(s) that can be used to test all the functionality delivered with this milestone. |
@@ -210,7 +239,7 @@ Only investigation into available proof systems, example circuits, and on-chain 
 
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
-| **0a.** | MIT |
+| **0a.** | License | Apache 2.0 / GPLv3 / MIT / Unlicense |
 | **0b.** | Documentation | We will provide both **inline documentation** of the code and a basic **tutorial** that explains how a user can (for example) spin up one of our Substrate nodes and send test transactions, which will show how the new functionality works. |
 | **0c.** | Testing and Testing Guide | Core functions will be fully covered by comprehensive unit tests to ensure functionality and robustness. In the guide, we will describe how to run these tests. |
 | **0d.** | Docker | We will provide a Dockerfile(s) that can be used to test all the functionality delivered with this milestone. |
